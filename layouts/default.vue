@@ -7,9 +7,9 @@ onMounted(() => {
     preloader.value = false;
   }, 1000);
 });*/
-if (!authStore.isAuthenticated) {
+/*if (!authStore.isAuthenticated) {
   navigateTo('login');
-}
+}*/
 </script>
 <template>
   <body class="hold-transition sidebar-mini layout-fixed">

@@ -17,10 +17,11 @@ export const useAuthStore = defineStore('auth', {
         async signup(formData) {
             const {$axios} = useNuxtApp();
             try {
-                $axios.post('/signup', formData)
+                $axios.post('/register', formData)
                     .then(response => {
-                        if (response.data.data.status === "success") {
-                            navigateTo('/auth/verify-email?email=' + formData.email);
+                        if (response) {
+                            navigateTo('/login');
+                            useToast().success('Registration successful. Please login to continue.');
                             return true;
                         }
                     })
@@ -76,13 +77,13 @@ export const useAuthStore = defineStore('auth', {
                         }
                     })
                     .catch(error => {
-                        console.log(error);
-/*                        if (error.response.status === 401) {
+                        useToast().warning(error.response.data.message);
+                        if (error.response.status === 401) {
                             useToast().warning(error.response.data.data.message);
                         } else {
                             console.log(error);
                             useToast().error(error.response.status);
-                        }*/
+                        }
                     });
             } catch (error) {
                 console.log(error);
