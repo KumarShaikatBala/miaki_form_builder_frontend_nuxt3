@@ -87,7 +87,10 @@
 <script setup>
 import { ref } from 'vue';
 import { useMyFetch } from '@/composables/useMyFetch';
-
+definePageMeta({
+  middleware: ["auth"],
+  layout: "default",
+});
 const jsonInput = ref('');
 const formFields = ref([]);
 const formTitle = ref(''); // New state for form title

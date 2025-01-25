@@ -70,7 +70,10 @@
 import { ref } from 'vue';
 import { useMyFetch } from '@/composables/useMyFetch';
 
-// Define the type for form data
+definePageMeta({
+  middleware: ["auth"],
+  layout: "default",
+});
 interface FormData {
   id: number;
   title: string;

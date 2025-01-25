@@ -174,6 +174,12 @@ import { useRouter } from 'vue-router';
 import draggable from 'vuedraggable';
 import { useMyFetch } from '@/composables/useMyFetch';
 
+// add middleware to check if user is authenticated
+
+definePageMeta({
+  middleware: ["auth"],
+  layout: "default",
+});
 interface ValidationRules {
   minLength?: number;
   maxLength?: number;
