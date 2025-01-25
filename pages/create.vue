@@ -168,22 +168,40 @@
   </div>
 </template>
 
-<script setup>
+<script lang="ts" setup>
 import { ref } from 'vue';
-import { useRouter } from 'nuxt/app';
+import { useRouter } from 'vue-router';
 import draggable from 'vuedraggable';
 import { useMyFetch } from '@/composables/useMyFetch';
 
+interface ValidationRules {
+  minLength?: number;
+  maxLength?: number;
+  pattern?: string;
+}
+
+interface FormField {
+  type: string;
+  label: string;
+  placeholder?: string;
+  required: boolean;
+  validation_rules: ValidationRules;
+  id?: number; // Temporary ID for client-side operations
+}
+
+interface Form {
+  title: string;
+  fields: FormField[];
+}
+
 const router = useRouter();
 
-// Form data
-const form = ref({
+const form = ref<Form>({
   title: '',
   fields: []
 });
 
-// New field object
-const newField = ref({
+const newField = ref<FormField>({
   type: 'text',
   label: '',
   placeholder: '',
@@ -191,7 +209,6 @@ const newField = ref({
   validation_rules: {}
 });
 
-// Add a new field
 const addField = () => {
   if (!newField.value.label || !newField.value.type) {
     alert('Please provide a label and type for the new field.');
@@ -201,10 +218,9 @@ const addField = () => {
   form.value.fields.push({
     ...newField.value,
     id: Date.now(), // Temporary ID for client-side operations
-    validation_rules: newField.value.validation_rules || {}
+    validation_rules: { ...newField.value.validation_rules }
   });
 
-  // Reset newField
   newField.value = {
     type: 'text',
     label: '',
@@ -214,17 +230,14 @@ const addField = () => {
   };
 };
 
-// Remove a field
-const removeField = (index) => {
+const removeField = (index: number) => {
   form.value.fields.splice(index, 1);
 };
 
-// Update field order
 const updateFieldOrder = () => {
   console.log('Field order updated:', form.value.fields);
 };
 
-// Submit form
 const submitForm = async () => {
   try {
     const response = await useMyFetch('forms', {

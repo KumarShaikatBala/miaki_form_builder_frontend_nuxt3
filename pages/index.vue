@@ -4,7 +4,8 @@
 
 <template>
   <body class="hold-transition login-page">
- <h1>Laravel 10 Nuxt 3 Role Permissions</h1>
+ <h1>kumarshaikatbala@gmail.com</h1>
+ <h1>01617777010</h1>
   </body>
 </template>
 
